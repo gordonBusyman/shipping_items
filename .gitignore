@@ -19,3 +19,9 @@
 
 # Go workspace file
 go.work
+/.idea/shipping_items.iml
+/.idea/vcs.xml
+/.idea/JetClient/state.xml
+/.idea/JetClient/settings.xml
+/.idea/modules.xml
+/.idea/.gitignore
