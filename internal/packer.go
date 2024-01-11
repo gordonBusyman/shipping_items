@@ -124,7 +124,13 @@ func calc(rest int, packs map[int]int, availablePackSizes []int, p *[]Possible) 
 	}
 
 	// we are on the smallest pack size, and we have extra items
-	if len(availablePackSizes) < 2 {
+	isSmallest := len(availablePackSizes) == 1
+	extraLessThanSmallestPack := availablePackSizes[0]-extra < availablePackSizes[len(availablePackSizes)-1]
+
+	// IF:
+	// 1. we are on the smallest pack size, and we have extra items
+	// 2. the extra items are less than the smallest pack size
+	if isSmallest || extraLessThanSmallestPack {
 		packs[availablePackSizes[0]]++ // add one more pack to fit the rest items
 
 		*p = append(*p, Possible{
@@ -132,18 +138,7 @@ func calc(rest int, packs map[int]int, availablePackSizes []int, p *[]Possible) 
 			extra:         availablePackSizes[0] - extra,
 			amountOfPacks: amountOfPacks + 1,
 		})
-		return
-	}
 
-	// the extra items are less than the smallest pack size
-	if availablePackSizes[0]-extra < availablePackSizes[len(availablePackSizes)-1] {
-		packs[availablePackSizes[0]]++ // add one more pack to fit the rest items
-
-		*p = append(*p, Possible{
-			packs:         packs,
-			extra:         availablePackSizes[0] - extra,
-			amountOfPacks: amountOfPacks + 1,
-		})
 		return
 	}
 
