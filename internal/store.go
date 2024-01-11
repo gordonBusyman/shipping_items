@@ -1,6 +1,8 @@
 package internal
 
-import "sort"
+import (
+	"sort"
+)
 
 // Store is the store struct
 type Store struct {
@@ -16,6 +18,11 @@ func NewStore(db string) *Store {
 // Smallest returns the smallest pack size available
 func (s *Store) Smallest() int {
 	return s.PacksAvailable[len(s.PacksAvailable)-1]
+}
+
+// Biggest returns the biggest pack size available
+func (s *Store) Biggest() int {
+	return s.PacksAvailable[0]
 }
 
 // Sort sorts the packs available in descending order
