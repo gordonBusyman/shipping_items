@@ -17,4 +17,3 @@ The API has 4 endpoints:
 - There is validation for the input data.
 - There is a simple logging.
 - There is a simple error handling.
-- The calculation won't work efficiently for pack sizes that are not multiples of each other (e.g. `234`, `501`, `502`).
