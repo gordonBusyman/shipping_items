@@ -1,6 +1,7 @@
 package api
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -8,7 +9,6 @@ import (
 	"github.com/go-chi/chi"
 
 	"module-path/internal"
-	"module-path/util"
 )
 
 // PackItemsHandler handles the GET /pack_items endpoint
@@ -41,8 +41,19 @@ func (api API) PackItemsHandler(w http.ResponseWriter, r *http.Request) {
 
 	result := s.CalculatePacks(itemsOrdered)
 
+	jsonResponse, err := json.Marshal(result)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+
+		return
+	}
+
+	// Set the content type to 'application/json'
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, util.PrepareMapResponse(result))
+
+	// Write the JSON response
+	w.Write(jsonResponse)
 }
 
 // AvailablePacksHandler handles the GET /available_packs endpoint
@@ -57,8 +68,19 @@ func (api API) AvailablePacksHandler(w http.ResponseWriter, _ *http.Request) {
 		return
 	}
 
+	jsonResponse, err := json.Marshal(p)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+
+		return
+	}
+
+	// Set the content type to 'application/json'
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, util.PrepareSliceResponse(p))
+
+	// Write the JSON response
+	w.Write(jsonResponse)
 }
 
 // DeletePackItemsHandler handles the DELETE /pack/{items} endpoint
