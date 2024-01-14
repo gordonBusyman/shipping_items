@@ -1,0 +1,21 @@
+body {
+    font-family: cursive;
+}
+
+.button-color {
+    background-color: blue;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.button-color:hover {
+    background-color: darkblue;
+}
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}

@@ -14,7 +14,7 @@ import (
 )
 
 func init() {
-	//
+	// Create packs.json if it doesn't exist
 	file, err := os.Create("packs.json")
 	if err != nil {
 		log.Printf("error opening file: %v", err)
@@ -38,11 +38,17 @@ func main() {
 	r := chi.NewRouter()
 
 	a := api.NewAPI("packs.json")
+	// Serve static files
+	r.Handle("/static/*", http.StripPrefix("/static/", http.FileServer(http.Dir("./static"))))
 
-	r.Get("/pack_items/{items}", a.PackItemsHandler)
-	r.Get("/available_packs", a.AvailablePacksHandler)
-	r.Delete("/pack/{items}", a.DeletePackItemsHandler)
-	r.Post("/pack/{items}", a.PostPackItemHandler)
+	// Serve the index page
+	r.Get("/", a.Index)
+
+	// API endpoints
+	r.Get("/pack_items/{items}", a.PackItems)
+	r.Get("/available_packs", a.AvailablePkgSizes)
+	r.Delete("/pack/{items}", a.DeletePkgSize)
+	r.Post("/pack/{items}", a.CreatePkgSize)
 
 	fmt.Println("server listening on 8080")
 	if err := http.ListenAndServe(":8080", r); err != nil {
