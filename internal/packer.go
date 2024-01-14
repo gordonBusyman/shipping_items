@@ -1,6 +1,6 @@
 package internal
 
-// CalculatePacks calculates the number of packs required for a given number of items
+// CalculatePacks calculates the number of packs required for a given number of items.
 func (s *Store) CalculatePacks(itemsOrdered int) map[int]int {
 	// Ensure pack sizes are sorted in descending order
 	s.Sort()
@@ -25,7 +25,7 @@ func (s *Store) CalculatePacks(itemsOrdered int) map[int]int {
 	}
 
 	// If there is only one pack size available, return the number of packs required
-	if len(packs) == 1 {
+	if len(s.PacksAvailable) == 1 {
 		if numPacks := remainingItems / packs[0]; numPacks > 0 {
 			packs[packs[0]] = numPacks
 			if remainingItems > 0 {
